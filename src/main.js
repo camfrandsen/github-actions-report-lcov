@@ -21,7 +21,7 @@ async function run() {
 
     await genhtml(coverageFiles, tmpPath);
 
-    const coverageFile = await mergeCoverages(coverageFiles, tmpPath);
+    const coverageFile = await mergeCoverages(coverageFiles);
     const totalCoverage = lcovTotal(coverageFile);
     const minimumCoverage = core.getInput('minimum-coverage');
     const gitHubToken = core.getInput('github-token').trim();
@@ -125,10 +125,10 @@ async function genhtml(coverageFiles, tmpPath) {
   }
 }
 
-async function mergeCoverages(coverageFiles, tmpPath) {
+async function mergeCoverages(coverageFiles) {
   // This is broken for some reason:
   //const mergedCoverageFile = path.resolve(tmpPath, 'lcov.info');
-  const mergedCoverageFile = tmpPath + '/lcov.info';
+  const mergedCoverageFile = 'lcov.info';
   const args = [];
 
   for (const coverageFile of coverageFiles) {
